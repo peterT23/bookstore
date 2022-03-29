@@ -1,17 +1,22 @@
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 
-const NotFoundPage = () => {
+import { Link as RouterLink } from "react-router-dom";
+import { Box, Button, Typography, Container } from "@mui/material";
+
+function NotFoundPage() {
   return (
-    <Container>
-      <Row>
-        <Col md={{ span: 6, offset: 3 }}>
-          <h1>404</h1>
-          <p>The page you are looking for does not exist.</p>
-        </Col>
-      </Row>
+    <Container sx={{ display: "flex", height: "100%", alignItems: "center" }}>
+      <Box sx={{ maxWidth: 480, margin: "auto", textAlign: "center" }}>
+        <Typography variant="h4" paragraph>
+          Page not found!
+        </Typography>
+        <Typography sx={{ color: "text.secondary", mb: "1rem" }}>
+          Sorry, we couldn’t find the page you requested.
+        </Typography>
+        <Button to="/" variant="contained" component={RouterLink}>
+          Go to Home
+        </Button>
+      </Box>
     </Container>
   );
-};
+}
 export default NotFoundPage;
-    

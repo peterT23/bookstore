@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
 import { ClipLoader } from "react-spinners";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../apiService";
+import { Container, Button, Box, Grid, Stack, Typography } from "@mui/material";
+
 
 const BACKEND_API = process.env.REACT_APP_BACKEND_API;
 
@@ -50,48 +51,49 @@ const BookDetailPage = () => {
   return (
     <Container>
       {loading ? (
-        <div className="text-center">
-          <ClipLoader color="#f86c6b" size={150} loading={true} />
-        </div>
+        <Box sx={{ textAlign: "center", color: "primary.main" }} >
+          <ClipLoader color="#inherit" size={150} loading={true} />
+        </Box>
       ) : (
-        <Row className="border border-info mt-5">
-          <Col md={3}>
+        <Grid container spacing={2} p={4} mt={5} sx={{ border: "1px solid black" }}>
+          <Grid item md={4}>
             {book && (
               <img
-                className="w-100"
+                width="100%"
                 src={`${BACKEND_API}/${book.imageLink}`}
                 alt=""
               />
             )}
-          </Col>
-          <Col md={9}>
+          </Grid>
+          <Grid item md={8}>
             {book && (
-              <>
+              <Stack>
                 <h2>{book.title}</h2>
-                <div>
+                <Typography variant="body1">
                   <strong>Author:</strong> {book.author}
-                </div>
-                <div>
+                </Typography>
+                <Typography variant="body1">
                   <strong>Year:</strong> {book.year}
-                </div>
-                <div>
+                </Typography>
+                <Typography variant="body1">
                   <strong>Country:</strong> {book.country}
-                </div>
-                <div>
+                </Typography>
+                <Typography variant="body1">
                   <strong>Pages:</strong> {book.pages}
-                </div>
-                <div>
+                </Typography>
+                <Typography variant="body1">
                   <strong>Language:</strong> {book.language}
-                </div>
-                <Button onClick={() => addToReadingList(book)}>
+                </Typography>
+                <Button variant="outlined" sx={{ width: "fit-content" }} onClick={() => addToReadingList(book)}>
                   Add to Reading List
-                </Button>{" "}
-              </>
+                </Button>
+              </Stack>
             )}
-          </Col>
-        </Row>
-      )}
-    </Container>
+          </Grid>
+        </Grid>
+      )
+      }
+    </Container >
   );
 };
 

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Card, Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Button, Box, Card, Stack, CardMedia, CardActionArea, Typography, CardContent } from "@mui/material";
 import { ClipLoader } from "react-spinners";
-
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../apiService";
 
@@ -12,10 +11,10 @@ const ReadingPage = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [removedBookId, setRemovedBookId] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate()
 
   const handleClickBook = (bookId) => {
-    history.push(`/books/${bookId}`);
+    navigate(`/books/${bookId}`);
   };
 
   const removeBook = (bookId) => {
@@ -55,55 +54,54 @@ const ReadingPage = () => {
 
   return (
     <Container>
-      <Row className="justify-content-center">
-        <Col md={6}>
-          <h1 className="text-center">Reading List</h1>
-          <hr />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {loading ? (
-            <div className="text-center">
-              <ClipLoader color="#f86c6b" size={150} loading={true} />
-            </div>
-          ) : (
-            <ul className="list-unstyled d-flex flex-wrap justify-content-between">
-              {books.map((book) => (
-                <li key={book.id}>
-                  <Card
-                    style={{
-                      width: "12rem",
-                      height: "27rem",
-                      marginBottom: "2rem",
-                      position: "relative",
+      <Typography variant="h3" sx={{ textAlign: "center" }} m={3}>Book Store</Typography>
+      {loading ? (
+        <Box sx={{ textAlign: "center", color: "primary.main" }} >
+          <ClipLoader color="inherit" size={150} loading={true} />
+        </Box>
+      ) : (
+        <Stack direction="row" spacing={2} justifyContent="space-around" flexWrap={"wrap"}>
+          {books.map((book) => (
+            <Card
+              key={book.id}
+              sx={{
+                width: "12rem",
+                height: "27rem",
+                marginBottom: "2rem",
+              }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  image={`${BACKEND_API}/${book.imageLink}`}
+                  alt={`${book.title}`}
+                  onClick={() => handleClickBook(book.id)}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {`${book.title}`}
+                  </Typography>
+                  <Typography gutterBottom variant="body1" component="div">
+                    {`${book.author}`}
+                  </Typography>
+                  <Button
+                    sx={{
+                      position: "absolute", top: "5px", right: "5px",
+                      backgroundColor: "secondary.light", color: "secondary.contrastText",
+                      padding: "0", minWidth: "1.5rem"
                     }}
+                    size="small"
+                    onClick={() => removeBook(book.id)}
                   >
-                    <Card.Img
-                      variant="top"
-                      src={`${BACKEND_API}/${book.imageLink}`}
-                      onClick={() => handleClickBook(book.id)}
-                    />
-                    <Card.Body>
-                      <Card.Title>{book.title}</Card.Title>
-                      <Card.Text>@{book.author}</Card.Text>
-                      <Button
-                        className="position-absolute btn-danger"
-                        style={{ top: "5px", right: "5px" }}
-                        size="sm"
-                        onClick={() => removeBook(book.id)}
-                      >
-                        &times;
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Col>
-      </Row>
-    </Container>
+                    &times;
+                  </Button>
+                </CardContent>
+
+              </CardActionArea>
+            </Card>
+          ))}
+        </Stack>
+      )}
+    </Container >
   );
 };
 
