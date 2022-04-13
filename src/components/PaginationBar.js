@@ -3,7 +3,6 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 const PaginationBar = ({ pageNum, setPageNum, totalPageNum }) => {
-  console.log("total", totalPageNum)
   const handleChange = (event, value) => {
     setPageNum(value);
   };
