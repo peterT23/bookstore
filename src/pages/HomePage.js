@@ -86,10 +86,10 @@ const HomePage = () => {
             <ClipLoader color="inherit" size={150} loading={true} />
           </Box>
         ) : (
-          <Stack direction="row" spacing={2} justifyContent="space-around" flexWrap={"wrap"}>
+          <Stack direction="row" spacing={2} justifyContent="space-around" flexWrap="wrap">
             {books.map((book) => (
               <Card
-                key={book.id} onClick={() => handleClickBook(book.id)} s
+                key={book.id} onClick={() => handleClickBook(book.id)}
                 sx={{
                   width: "12rem",
                   height: "27rem",
